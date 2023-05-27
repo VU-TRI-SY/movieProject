@@ -29,3 +29,14 @@ The Command class is an abstract base class that represents a command to be exec
 
 #### Borrow.h, Return.h, History.h, and Inventory.h
 These classes inherit from the Command class and represent specific commands that can be executed. They override the execute method from the Command class to perform their specific actions on the Store object.
+
+### Use case 1: create a movie
+main() calls MovieFactory.createMedia() method to create a movie.
+main() calls Store.addMedia() 
+
+### Use case 2: create a user
+main() calls the constructor of User class to create a new user.
+main() calls Store.addUser() 
+
+### Use case 3: a customer borrow a movie
+main() calls Store.borrowMedia() then Customer.borrowMedia() to complete the transaction.
