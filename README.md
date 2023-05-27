@@ -8,7 +8,7 @@ This is the driver class of the program. Its main function will create an instan
 ### Store.h
 The _Store class_ manages the inventory of media items and the list of customers. It provides methods to read data from files to populate the inventory and customer list. It also allows to add or remove media from the inventory, add customers, and retrieve specific media or customer data.
 
-## Media.h
+### Media.h
 The Media class is an abstract base class that represents a generic media item. This class contains methods and data members common to all media items such as the type of media (mediaType), the current stock, the director's name, the title, and the release year. This class also provides methods to get details about the media item and to borrow and return items.
 
 ### Movie.h
