@@ -7,6 +7,8 @@ For Return operation, the main function would call addMedia() in the Store class
 
 For History operation, the Customer class would call getTransactionHistory() which returns a vector of strings representing the transaction history of the customer. The Store class has a private member called transactionHistory, which is a vector of strings representing the overall transaction history of the store. Then the Store class will call getHistory(customerId), which takes a customerId as input and returns a map of integers to lists of strings representing the transaction history of a particular customer. The Driver class is not directly involved in the history operation. It mainly interacts with the Store class and other classes to perform operations like reading inventory, customers, and commands, and running the program.
 
+For Inventory operation, it involves adding and removing Media objects from the Store's inventory by using methods like addMedia(Media*) and removeMedia(Media*) , as well as reading and displaying the inventory data. The Store class manages the inventory, and the Driver class interacts with the Store to perform inventory-related operations through the inventoryMedia() method to display the current inventory of the Store.
+
 ### Driver.cpp
 This is the driver class of the program. Its main function will create an instance of the _Store class_ and will call the necessary functions to read in the movies, customers, and commands.
 
