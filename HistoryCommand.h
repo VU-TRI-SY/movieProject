@@ -5,7 +5,7 @@
 
 class HistoryCommand : public Command {
 public:
-    HistoryCommand(const string& commandType, int customerID, int mediaType, int movieType));
+    HistoryCommand(const string& commandType, int customerID, int mediaType, int movieType);
     void execute(Store& store) override;
 };
 
