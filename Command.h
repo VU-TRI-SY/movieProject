@@ -1,4 +1,4 @@
-#pragma once
+#pragma
 #ifndef COMMAND_H
 #define COMMAND_H
 
