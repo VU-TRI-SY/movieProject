@@ -1,7 +1,14 @@
 # Movie_Design_Team_9
 Created by Linh Ha Huynh, Johanna Vo, Minh Chau Vu, Hany Ghobrial
+## Introduction
+This program simulates a movie store management system. It is designed to manage various operations within a movie rental store. These operations include maintaining an inventory of movies, keeping track of customers and their transaction histories, and handling common transactions such as borrowing and returning movies. 
+
+The system is intended to handle three genres of movies: Comedy, Drama, and Classics. Each movie is identified by its unique sorting attributes. Customers are identified by a unique customer ID. The system handles four types of commands: Borrow, Return, History, and Inventory. 
+
+To handle the diverse genres of movies and types of commands, the project leverages Object-Oriented Programming principles. It uses inheritance and polymorphism to create a set of interrelated classes that represent various entities such as Media, Movie, Comedy, Drama, Classic, Customer, Command, and its subclasses, along with two factories, MediaFactory, and MovieFactory, to aid in the creation of these objects.
+
 ## UML Diagram
-![Group9_Movie Design](https://github.com/johannavo97/Movie_Design_Team/assets/100493934/2403911d-fcbf-417a-80cd-245fd3faf9a3)
+![Group9_Movie Design - Page 2](https://github.com/johannavo97/Movie_Design_Team/assets/100493934/3c687378-3d25-4861-af84-6b3a7ed03a56)
 ## Class interactions
 ### Use case 1: create a movie
 main() calls MovieFactory.createMedia() method to create a movie.
@@ -52,3 +59,6 @@ The Command class is an abstract base class that represents a command to be exec
 #### Borrow.h, Return.h, History.h, and Inventory.h
 These classes inherit from the Command class and represent specific commands that can be executed. They override the execute method from the Command class to perform their specific actions on the Store object.
 
+
+### Use case 3: a customer borrow a movie
+main() calls Store.borrowMedia() then Customer.borrowMedia() to complete the transaction.
