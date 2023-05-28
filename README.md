@@ -8,7 +8,8 @@ The system is intended to handle three genres of movies: Comedy, Drama, and Clas
 To handle the diverse genres of movies and types of commands, the project leverages Object-Oriented Programming principles. It uses inheritance and polymorphism to create a set of interrelated classes that represent various entities such as Media, Movie, Comedy, Drama, Classic, Customer, Command, and its subclasses, along with two factories, MediaFactory, and MovieFactory, to aid in the creation of these objects.
 
 ## UML Diagram
-![Group9_Movie Design - Page 2](https://github.com/johannavo97/Movie_Design_Team/assets/100493934/3c687378-3d25-4861-af84-6b3a7ed03a56)
+![Group9_Movie Design - Page 2 (1)](https://github.com/johannavo97/Movie_Design_Team/assets/100493934/ef45650b-b519-42f9-a17a-61aa10729ce6)
+
 ## Class interactions
 ### Use case 1: create a movie
 main() calls MovieFactory.createMedia() method to create a movie.
