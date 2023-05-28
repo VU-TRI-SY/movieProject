@@ -20,9 +20,10 @@ private:
   char movieType;
 
 public:
+  // constructors
   Drama();
   Drama(char type, int stock, string director, string title, int year);
-  // seter, getter
+  // setter, getter
   void setYear(int);
   int getYear();
 };
