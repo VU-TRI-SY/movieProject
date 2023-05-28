@@ -60,5 +60,3 @@ The Command class is an abstract base class that represents a command to be exec
 These classes inherit from the Command class and represent specific commands that can be executed. They override the execute method from the Command class to perform their specific actions on the Store object.
 
 
-### Use case 3: a customer borrow a movie
-main() calls Store.borrowMedia() then Customer.borrowMedia() to complete the transaction.
