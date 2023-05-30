@@ -1,5 +1,8 @@
 /*
-The _Store class_ manages the inventory of media items and the list of customers. It provides methods to read data from files to populate the inventory and customer list. It also allows to add or remove media from the inventory, add customers, and retrieve specific media or customer data.
+The _Store class_ manages the inventory of media items and the list of
+customers. It provides methods to read data from files to populate the inventory
+and customer list. It also allows to add or remove media from the inventory, add
+customers, and retrieve specific media or customer data.
 */
 
 #include "customer.h"
@@ -10,6 +13,11 @@ The _Store class_ manages the inventory of media items and the list of customers
 
 // Store.h
 class Store {
+private:
+  unordered_map<string, vector<Media *>> inventory;
+  unordered_map<int, Customer *> customerList;
+  vector<string> transactionHistory;
+
 public:
   // Reads inventory data from a file
   void readInventory(string fileName);
@@ -44,9 +52,4 @@ public:
 
   // Customer return a media
   void returnMedia();
-
-private:
-  unordered_map<string, vector<Media *>> inventory;
-  unordered_map<int, Customer *> customerList;
-  vector<string> transactionHistory;
 };

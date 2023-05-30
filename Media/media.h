@@ -29,7 +29,7 @@ public:
   // year
   Media(char type, int stock, string director, string title, int year);
 
-  string getDetails();
+  virtual string getDetails();
 
   // reduce the stock by 1
   void borrow();

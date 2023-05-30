@@ -8,7 +8,7 @@ class, this class has its own attribute, such as movieType... such as:
 #ifndef MOVIE_H
 #define MOVIE_H
 
-#include "Media.h"
+#include "../media.h"
 #include <fstream>
 
 using namespace std;
@@ -18,6 +18,9 @@ private:
   char movieType;
 
 public:
+  Movie();
+  Movie(char type, int stock, string director, string title, int year);
+  string getDetails(); //override
 };
 
 #endif

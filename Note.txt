@@ -1,0 +1,22 @@
+Virtual: 
+-case 1: chỉ có keyword virtual
+Yêu cầu compiler phải xét xem gọi tới method đó của class con hay class cha, dựa trên type
+của Object thay vì type của pointer
+Ví dụ: Parent* p = new Child()
+       p->F();
+
+Khi F() được gọi thì compiler sẽ phải dựa trên type của object là Child (dynamic binding)thay 
+vì dựa trên type của pointer p (Parent) --> method F() của Child sẽ được gọi (Running time Polymorphism)
+
+*Nếu không có keyword virtual thì F() của Parent sẽ được gọi ngay vì ở đây xảy ra quá trình
+static binding (bind function at compiling time) ----> F() của Parent sẽ được gọi do type của 
+pointer p là Parent
+
+-case 2: virtual keyword đi kèm =0
+Nếu một method có keyword virtual và =0 thì đây là một abstract method ~ pure virtual function
+---> Method này sẽ được declare ở class cha và nó không thể có body. 
+---> Khi một class con kế thừa lại class cha thì nó bắt buộc phải implement lại abstract method trên
+
+** Trong C++, nếu tạo ra một object string stream từ một string cho trước --> string stream đó giống hệt với input stream
+---> có thể dùng syntax để extract infor từ string đã cho giống như extract infor từ input stream
+có thể dùng: >>, get(), getline()

@@ -8,23 +8,19 @@ class, this class has its own attribute, such as getYear, setYear...
 #ifndef COMEDY_H
 #define COMEDY_H
 
-#include "movie.h"
 #include <fstream>
 #include <iostream>
 #include <string>
 
+#include "movie.h"
 using namespace std;
 
 class Comedy : public Movie {
-
 public:
   // constructor
   Comedy();
   Comedy(char type, int stock, string director, string title, int year);
 
-  // getter, setter
-  void setYear(int);
-  int getYear();
 };
 
 #endif

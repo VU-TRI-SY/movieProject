@@ -16,16 +16,11 @@ class, this class has its own attribute, such as getYear, setYear...
 using namespace std;
 
 class Drama : public Movie {
-private:
-  char movieType;
 
 public:
   // constructors
   Drama();
   Drama(char type, int stock, string director, string title, int year);
-  // setter, getter
-  void setYear(int);
-  int getYear();
 };
 
 #endif

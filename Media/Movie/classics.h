@@ -8,10 +8,11 @@ class, this class has its own attribute, such as monthReleased, actor,...
 #ifndef CLASSICS_H
 #define CLASSICS_H
 
-#include "movie.h"
 #include <fstream>
 #include <iostream>
 #include <string>
+
+#include "movie.h"
 
 using namespace std;
 
@@ -19,12 +20,18 @@ class Classics : public Movie {
 private:
   int monthReleased;
   string actor;
-
 public:
+  // constructor
+  Classics();
+  Classics(char movieType, int stock, string director, string title, string actor,
+           int month, int year);
   // getter, setter
   void setActor(string);
+  string getActor();
   void setReleaseMonth(int);
   int getReleaseMonth();
+
+  string getDetails(); // override
 };
 
 #endif
