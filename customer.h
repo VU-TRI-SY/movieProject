@@ -2,18 +2,24 @@
  * This class represents a customer.
  */
 
-#ifndef MOVIE_DESIGN_TEAM_CUSTOMER_H
-#define MOVIE_DESIGN_TEAM_CUSTOMER_H
-
+#ifndef CUSTOMER_H
+#define CUSTOMER_H
+#include <string>
+#include <vector>
+#include "Media/media.h"
 class Customer {
 private:
   int customerId;
   std::string firstName;
   std::string lastName;
-  vector<Media *> borrowedMedia;
+  std::vector<Media *> borrowedMedia;
 
 public:
+  Customer();
+  Customer(int customerId, std::string firstName, std::string lastName);
   void borrowMedia(Media *media);
-  Media *returnMedia(const string &mediaDescription);
+  void returnMedia(Media* media);
+  std::string getDetails();
+  int getId();
 };
-#endif // MOVIE_DESIGN_TEAM_CUSTOMER_H
+#endif // CUSTOMER_H

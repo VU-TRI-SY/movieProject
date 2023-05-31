@@ -7,6 +7,7 @@ Media::Media() {
   director = "";
   title = "";
   yearReleased = 0;
+  this->borrowedStock = 0;
 }
 
 Media::Media(char type, int stock, string director, string title, int year) {
@@ -15,6 +16,7 @@ Media::Media(char type, int stock, string director, string title, int year) {
   this->director = director;
   this->title = title;
   this->yearReleased = year;
+  this->borrowedStock = 0;
 }
 
 string Media::getDetails(){
@@ -25,9 +27,31 @@ string Media::getDetails(){
 // reduce the stock by 1
 void Media::borrow(){
   this->stock--;
+  this->borrowedStock++;
 }
 
 // increase stock by 1
 void Media::returnItem(){
   this->stock++;
+  this->borrowedStock--;
+}
+
+string Media::getTitle(){
+  return this->title;
+}
+
+string Media::getDirector(){
+  return this->director;
+}
+
+int Media::getYear(){
+  return this->yearReleased;
+}
+
+int Media::getStock(){
+  return this->stock;
+}
+
+int Media::getBorrowedStock(){
+  return this->borrowedStock;
 }

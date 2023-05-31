@@ -22,3 +22,7 @@ string Movie::getDetails(){
   details.insert(3, inserted_str);
   return details;
 }
+
+char Movie::getMovieType(){
+  return this->movieType;
+}

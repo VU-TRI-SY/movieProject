@@ -18,6 +18,7 @@ class Media {
 private:
   char mediaType;
   int stock;
+  int borrowedStock;
   string director;
   string title;
   int yearReleased;
@@ -36,6 +37,12 @@ public:
 
   // increase stock by 1
   void returnItem();
+
+  string getTitle();
+  string getDirector();
+  int getYear();
+  int getStock();
+  int getBorrowedStock();
 };
 
 #endif

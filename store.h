@@ -6,7 +6,9 @@ customers, and retrieve specific media or customer data.
 */
 
 #include "customer.h"
-#include "media.h"
+#include "Media/media.h"
+#include "Media/Movie/movie.h"
+#include "Media/Movie/classics.h"
 #include <string>
 #include <unordered_map>
 #include <vector>
@@ -15,19 +17,13 @@ customers, and retrieve specific media or customer data.
 class Store {
 private:
   unordered_map<string, vector<Media *>> inventory;
-  unordered_map<int, Customer *> customerList;
-  vector<string> transactionHistory;
+  unordered_map<int, Customer*> customerList;
+  // vector<string> transactionHistory;
+  unordered_map<int, vector<string>> transactionHistory;
+  // customerList is a map that stores the list of current customers. The key is the customer ID and the value is a pointer to the Customer object.
+  // transactionHistory is map that stores the list of transactions. The key is the customer ID and the value is a vector of strings. Each string represents a transaction.
 
 public:
-  // Reads inventory data from a file
-  void readInventory(string fileName);
-
-  // Reads customer data from a file
-  void readCustomers(string fileName);
-
-  // Reads command data from a file
-  void readCommands(string fileName);
-
   // Adds a new media to the inventory
   void addMedia(Media *media);
 
@@ -38,7 +34,7 @@ public:
   void addCustomer(Customer *customer);
 
   // Returns the list of all media items currently in the store's inventory.
-  void getInventory();
+  unordered_map<string, vector<Media *>>  getInventory();
 
   // Returns a customer with the provided id
   Customer *getCustomer(int customerId);
@@ -47,9 +43,17 @@ public:
   // customerID)
   vector<string> getHistory(int customerId);
 
+  void addTransactionHistory(int customerID, string transaction);
+  
   // Customer borrow a media
-  void borrowMedia();
+  void borrowMedia(Customer* customer, Media* media);
 
   // Customer return a media
-  void returnMedia();
+  void returnMedia(Customer* customer, Media* media);
+
+  void printInventory();
+
+  Media* getMedia(char movieType, string title, int year); //search Comedy
+  Media* getMedia(char movieType, string director, string title); //search Drama
+  Media* getMedia(char movieType, int month, int year, string actor); //search Classic
 };
