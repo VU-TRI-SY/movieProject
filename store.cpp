@@ -3,6 +3,23 @@
 #include "store.h"
 
 using namespace std;
+Store::Store(){
+    //do nothing
+    customerList = unordered_map<int, Customer *>();
+}
+Store::~Store(){
+    for(auto it = customerList.begin(); it != customerList.end(); it++){
+        delete it->second;
+        it->second = nullptr;
+    }
+
+    for(auto it = inventory.begin(); it != inventory.end(); it++){
+        for(int i = 0; i < it->second.size(); i++){
+            delete it->second[i];
+            it->second[i] = nullptr;
+        }
+    }
+}
 void Store::addMedia(Media *media){
     //casting to the type of Movie to add to the inventory
     Movie *movie = dynamic_cast<Movie *>(media);

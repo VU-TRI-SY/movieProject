@@ -21,5 +21,7 @@ public:
   void returnMedia(Media* media);
   std::string getDetails();
   int getId();
+  int getBorrowedStock();
+  Media* getBorrowedMedia(Media* media);
 };
 #endif // CUSTOMER_H

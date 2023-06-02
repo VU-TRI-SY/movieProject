@@ -38,3 +38,16 @@ int Customer::getId(){
     return customerId;
 }
 
+int Customer::getBorrowedStock(){
+    return borrowedMedia.size();
+}
+
+Media *Customer::getBorrowedMedia(Media *media) {
+    for (int i = 0; i < borrowedMedia.size(); i++) {
+        if (borrowedMedia[i] == media) {
+            return borrowedMedia[i];
+        }
+    }
+    return nullptr;
+}
+

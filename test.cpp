@@ -16,9 +16,11 @@ using namespace std;
 int main(){
     Store store;
     readInventory("data4movies.txt", store);
+    cout << "--------------------------------------------------------\n";
     readCustomers("data4customers.txt", store);
-    readCommands("data4commands.txt", store);
-
+    cout << "--------------------------------------------------------\n";
+    // readCommands("data4commands.txt", store);
+    // cout << "--------------------------------------------------------\n";
     return 0;
 }
 

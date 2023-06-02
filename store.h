@@ -17,13 +17,15 @@ customers, and retrieve specific media or customer data.
 class Store {
 private:
   unordered_map<string, vector<Media *>> inventory;
-  unordered_map<int, Customer*> customerList;
+  unordered_map<int, Customer *> customerList;
   // vector<string> transactionHistory;
   unordered_map<int, vector<string>> transactionHistory;
   // customerList is a map that stores the list of current customers. The key is the customer ID and the value is a pointer to the Customer object.
   // transactionHistory is map that stores the list of transactions. The key is the customer ID and the value is a vector of strings. Each string represents a transaction.
 
 public:
+  Store();
+  ~Store();
   // Adds a new media to the inventory
   void addMedia(Media *media);
 

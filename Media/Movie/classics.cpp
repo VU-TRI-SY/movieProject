@@ -2,7 +2,6 @@
 #include <iostream>
 
 using namespace std;
-
 // Default constructor
 Classics::Classics(): Movie() {
   //first: call default constructor of Movie
