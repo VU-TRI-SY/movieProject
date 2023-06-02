@@ -143,10 +143,12 @@ void readCommands(string file_name, Store& store){
             cerr << "Movie not found: " << movieType << " " << title << ", " << year << endl;
             break; //break out of switch
           }else{
-            store.borrowMedia(store.getCustomer(customerID), media);
-            //B 8888 D F When Harry Met Sally, 1989
-            string command = "B " + to_string(customerID) + " " + string(1, mediaType) + " " + string(1, movieType) + " " + title + ", " + to_string(year);
-            store.addTransactionHistory(customerID, command);
+            if(media->getStock() >= 1){
+              store.borrowMedia(store.getCustomer(customerID), media);
+              //B 8888 D F When Harry Met Sally, 1989
+              string command = "B " + to_string(customerID) + " " + string(1, mediaType) + " " + string(1, movieType) + " " + title + ", " + to_string(year);
+              store.addTransactionHistory(customerID, command);
+            }
             break; //break out of switch
           }
 
@@ -165,10 +167,12 @@ void readCommands(string file_name, Store& store){
             cerr << "Movie not found: " << movieType << " " << director << ", " << title << endl;
             break; //break out of switch
           }else{
-            store.borrowMedia(store.getCustomer(customerID), media);
-            //B 1000 D D Barry Levinson, Good Morning Vietnam,
-            string command = "B " + to_string(customerID) + " " + string(1, mediaType) + " " + string(1, movieType) + " " + director + ", " + title + ",";
-            store.addTransactionHistory(customerID, command);
+            if(media->getStock() >= 1){
+              store.borrowMedia(store.getCustomer(customerID), media);
+              //B 1000 D D Barry Levinson, Good Morning Vietnam,
+              string command = "B " + to_string(customerID) + " " + string(1, mediaType) + " " + string(1, movieType) + " " + director + ", " + title + ",";
+              store.addTransactionHistory(customerID, command);
+            }
             break; //break out of switch
           }
         }else if(movieType == 'C'){
@@ -185,10 +189,12 @@ void readCommands(string file_name, Store& store){
             cerr << "Movie not found: " << movieType << " " << month << " " << year << " " << actor << endl;
             break; //break out of switch
           }else{
-            store.borrowMedia(store.getCustomer(customerID), media);
-            //B 1000 D C 5 1940 Katherine Hepburn
-            string command = "B " + to_string(customerID) + " " + string(1, mediaType) + " " + string(1, movieType) + " " + to_string(month) + " " + to_string(year) + " " + actor;
-            store.addTransactionHistory(customerID, command);
+            if(media->getStock() >= 1){
+              store.borrowMedia(store.getCustomer(customerID), media);
+              //B 1000 D C 5 1940 Katherine Hepburn
+              string command = "B " + to_string(customerID) + " " + string(1, mediaType) + " " + string(1, movieType) + " " + to_string(month) + " " + to_string(year) + " " + actor;
+              store.addTransactionHistory(customerID, command);
+            }
             break; //break out of switch
           }
         }else{
