@@ -236,15 +236,7 @@ void readCommands(string file_name, Store &store) {
                << year << endl;
           break; // break out of switch
         } else {
-          // if (media->getStock() >= 1) {
-          //   store.borrowMedia(store.getCustomer(customerID), media);
-          //   // B 8888 D F When Harry Met Sally, 1989
-          //   string command = "B " + to_string(customerID) + " " +
-          //                    string(1, mediaType) + " " + string(1, movieType) +
-          //                    " " + title + ", " + to_string(year);
-          //   store.addTransactionHistory(customerID, command);
-          // }
-          if(store.getCustomer(customerID)->getBorrowedMedia(media) != nullptr){
+          if(store.getCustomer(customerID)->getBorrowedMedia(media) != nullptr){ //check that media is borrowed by customer
             store.returnMedia(store.getCustomer(customerID), media);
             // R 8888 D F When Harry Met Sally, 1989
             string command = "R " + to_string(customerID) + " " +string(1, mediaType) + " " + string(1, movieType) + " " + title + ", " + to_string(year);

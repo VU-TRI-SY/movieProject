@@ -9,12 +9,15 @@ Store::Store(){
 }
 Store::~Store(){
     for(auto it = customerList.begin(); it != customerList.end(); it++){
-        delete it->second;
+        delete it->second; //delete the object refered by this pointer
         it->second = nullptr;
     }
 
     for(auto it = inventory.begin(); it != inventory.end(); it++){
-        for(int i = 0; i < it->second.size(); i++){
+        //inventory has 3 pairs of key and value
+        // Comedy, Drama, Classics
+        // each value is a vector of Media pointers that refer to the actual Media object on heap
+        for(int i = 0; i < it->second.size(); i++){ //go through the vector of Media pointers
             delete it->second[i];
             it->second[i] = nullptr;
         }
