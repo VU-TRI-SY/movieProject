@@ -1,6 +1,6 @@
 #include <sstream>
 
-#include "comedy_factory.h"
+#include "Factory/comedy_factory.h"
 using namespace std;
 
 Media* ComedyFactory::createMedia(const string &str) {

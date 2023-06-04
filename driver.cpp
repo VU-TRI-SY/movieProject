@@ -1,9 +1,15 @@
 #include "driver.h"
 
+#include "Factory/customer_factory.h"
+#include "Factory/media_factory.h"
+#include "Factory/movie_factory.h"
+#include "Factory/comedy_factory.h"
+#include "Factory/drama_factory.h"
+#include "Factory/classics_factory.h"
 using namespace std;
 
-void readInventory(string file_name, Store &store) {
-  ifstream infile(file_name);
+void readInventory(string fileName, Store &store) {
+  ifstream infile(fileName);
 
   if (!infile) {
     cout << "File could not be opened." << endl;
@@ -53,8 +59,8 @@ void readInventory(string file_name, Store &store) {
 }
 
 // Reads customer data from a file
-void readCustomers(string file_name, Store &store) {
-  ifstream infile(file_name);
+void readCustomers(string fileName, Store &store) { // select ---> ctr + shift + L
+  ifstream infile(fileName);
 
   if (!infile) {
     cout << "File could not be opened." << endl;
@@ -64,7 +70,6 @@ void readCustomers(string file_name, Store &store) {
   string line;
   CustomerFactory customerFactory;
   Customer *customer = nullptr;
-  Media *media = nullptr;
   while (!infile.eof()) {
     getline(infile, line, '\n');
     customer = customerFactory.createCustomer(line);
@@ -74,8 +79,8 @@ void readCustomers(string file_name, Store &store) {
 }
 
 // Reads command data from a file
-void readCommands(string file_name, Store &store) {
-  ifstream infile(file_name);
+void readCommands(string fileName, Store &store) {
+  ifstream infile(fileName);
 
   if (!infile) {
     cout << "File could not be opened." << endl;
@@ -86,7 +91,8 @@ void readCommands(string file_name, Store &store) {
   int customerID;
   char mediaType;
   char movieType;
-  int month, year;
+  int month;
+  int year;
   string actor, title, director;
   Media *media = nullptr;
   while (!infile.eof()) {
@@ -100,7 +106,6 @@ void readCommands(string file_name, Store &store) {
       infile.ignore(1000, '\n'); // ignore the "\n"
       if (store.getCustomer(customerID) == nullptr) {
         cerr << "Customer " << customerID << " does not exist." << endl;
-        break; // break out of switch
       } else {
         vector<string> history = store.getHistory(customerID);
         for (int i = 0; i < history.size(); i++) {
@@ -146,7 +151,7 @@ void readCommands(string file_name, Store &store) {
                              " " + title + ", " + to_string(year);
             store.addTransactionHistory(customerID, command);
           }
-          break; // break out of switch
+          {break;} // break out of switch
         }
 
       } else if (movieType == 'D') {
@@ -188,7 +193,7 @@ void readCommands(string file_name, Store &store) {
         if (media == nullptr) {
           cerr << "Movie not found: " << movieType << " " << month << " "
                << year << " " << actor << endl;
-          break; // break out of switch
+          {break;} // break out of switch
         } else {
           if (media->getStock() >= 1) {
             store.borrowMedia(store.getCustomer(customerID), media);

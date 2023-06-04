@@ -34,7 +34,7 @@ string Customer::getDetails(){
     return details;
 }
 
-int Customer::getId(){
+int Customer::getId() const{
     return customerId;
 }
 

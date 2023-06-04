@@ -192,6 +192,10 @@ void Store::printInventory(){
 }
 
 Media* Store::getMedia(char movieType, string title, int year){//search Comedy
+    if(movieType != 'F'){
+        return nullptr;
+    }
+
     for(int i = 0; i < inventory["Comedy"].size(); i++){
         if(inventory["Comedy"][i]->getTitle() == title && inventory["Comedy"][i]->getYear() == year){
             return inventory["Comedy"][i];
@@ -200,6 +204,9 @@ Media* Store::getMedia(char movieType, string title, int year){//search Comedy
     return nullptr;
 }
 Media* Store::getMedia(char movieType, string director, string title){//search Drama
+    if(movieType != 'D'){
+        return nullptr;
+    }
     for(int i = 0; i < inventory["Drama"].size(); i++){
         if(inventory["Drama"][i]->getTitle() == title && inventory["Drama"][i]->getDirector() == director){
             return inventory["Drama"][i];
@@ -208,6 +215,10 @@ Media* Store::getMedia(char movieType, string director, string title){//search D
     return nullptr;
 }
 Media* Store::getMedia(char movieType, int month, int year, string actor){//search Classics
+    if(movieType != 'C'){
+        return nullptr;
+    }
+    
     for(int i = 0; i < inventory["Classics"].size(); i++){
         Classics *c = dynamic_cast<Classics *>(inventory["Classics"][i]);
         if(c->getReleaseMonth() == month && c->getYear() == year && c->getActor() == actor){

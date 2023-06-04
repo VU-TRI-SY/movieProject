@@ -19,8 +19,9 @@ int main(){
     cout << "--------------------------------------------------------\n";
     readCustomers("data4customers.txt", store);
     cout << "--------------------------------------------------------\n";
-    // readCommands("data4commands.txt", store);
-    // cout << "--------------------------------------------------------\n";
+    readCommands("data4commands.txt", store);
+    cout << "--------------------------------------------------------\n";
     return 0;
+
 }
 

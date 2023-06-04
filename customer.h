@@ -4,9 +4,9 @@
 
 #ifndef CUSTOMER_H
 #define CUSTOMER_H
+#include "Media/media.h"
 #include <string>
 #include <vector>
-#include "Media/media.h"
 class Customer {
 private:
   int customerId;
@@ -20,7 +20,7 @@ public:
   void borrowMedia(Media *media);
   void returnMedia(Media* media);
   std::string getDetails();
-  int getId();
+  int getId() const;
   int getBorrowedStock();
   Media* getBorrowedMedia(Media* media);
 };
