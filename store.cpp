@@ -35,13 +35,7 @@ void Store::addMedia(Media *media){
             inventory.insert(make_pair("Comedy", comedyList));
         }else{
             inventory["Comedy"].push_back(media);
-            std::sort(inventory["Comedy"].begin(), inventory["Comedy"].end(), [](Media* m1, Media* m2){
-                if(m1->getTitle() != m2->getTitle()){
-                    return (m1->getTitle().compare(m2->getTitle()) < 0);
-                }else{
-                    return m1->getYear() < m2->getYear();
-                }
-            });
+            sortComedyMovie();
         }
         break;
     case 'D':
@@ -51,13 +45,7 @@ void Store::addMedia(Media *media){
             inventory.insert(make_pair("Drama", dramaList));
         }else{
             inventory["Drama"].push_back(media);
-            std::sort(inventory["Drama"].begin(), inventory["Drama"].end(), [](Media* m1, Media* m2){
-                if(m1->getDirector() != m2->getDirector()){
-                    return (m1->getDirector().compare(m2->getDirector()) < 0);
-                }else{
-                    return (m1->getTitle().compare(m2->getTitle()) < 0);
-                }
-            });
+            sortDramaMovie();
         }
         break;
     
@@ -68,19 +56,7 @@ void Store::addMedia(Media *media){
             inventory.insert(make_pair("Classics", classicList));
         }else{
             inventory["Classics"].push_back(media);
-            std::sort(inventory["Classics"].begin(), inventory["Classics"].end(), [](Media* m1, Media* m2){
-                Classics *c1 = dynamic_cast<Classics *>(m1);
-                Classics *c2 = dynamic_cast<Classics *>(m2);
-                if(m1->getYear() != m2->getYear()){
-                    return m1->getYear() < m2->getYear();
-                }else{
-                    if(c1->getReleaseMonth() != c2->getReleaseMonth()){
-                        return c1->getReleaseMonth() < c2->getReleaseMonth();
-                    }else{
-                        return (c1->getActor().compare(c2->getActor()) < 0);
-                    }
-                }
-            });
+            sortClassicsMovie();
         }
         break;
     default:
@@ -226,4 +202,47 @@ Media* Store::getMedia(char movieType, int month, int year, string actor){//sear
         }
     }
     return nullptr;
+}
+
+void Store::sortComedyMovie(){
+    std::sort(inventory["Comedy"].begin(), inventory["Comedy"].end(), [](Media* m1, Media* m2){
+        if(m1->getTitle() != m2->getTitle()){
+            return (m1->getTitle().compare(m2->getTitle()) < 0);
+        }else{
+            return m1->getYear() < m2->getYear();
+        }
+    });
+}
+
+void Store::sortClassicsMovie(){
+    std::sort(inventory["Classics"].begin(), inventory["Classics"].end(), [](Media* m1, Media* m2){
+        Classics *c1 = dynamic_cast<Classics *>(m1);
+        Classics *c2 = dynamic_cast<Classics *>(m2);
+        if(m1->getYear() != m2->getYear()){
+            return m1->getYear() < m2->getYear();
+        }else{
+            if(c1->getReleaseMonth() != c2->getReleaseMonth()){
+                return c1->getReleaseMonth() < c2->getReleaseMonth();
+            }else{
+                return (c1->getActor().compare(c2->getActor()) < 0);
+            }
+        }
+    });
+}
+
+void Store::sortDramaMovie(){
+    std::sort(inventory["Drama"].begin(), inventory["Drama"].end(), [](Media* m1, Media* m2){
+        if(m1->getDirector() != m2->getDirector()){
+            return (m1->getDirector().compare(m2->getDirector()) < 0);
+        }else{
+            return (m1->getTitle().compare(m2->getTitle()) < 0);
+        }
+    });
+}
+
+void Store::displayHistory(int customerID){
+    vector<string> history = getHistory(customerID);
+    for (int i = history.size()-1; i >= 0; i--) {
+        cout << history[i] << endl;
+    }
 }

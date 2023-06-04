@@ -24,8 +24,7 @@ Media* ClassicsFactory::createMedia(const string &str) {
     ss >> first_name >> last_name >> month >> year;
     
     std::stringstream ss1;
-    ss << first_name << last_name; // Concatenate str1 and str2 using std::stringstream to avoid the disavantage of + operator
+    ss1 << first_name << " " << last_name; // Concatenate str1 and str2 using std::stringstream to avoid the disavantage of + operator
     std::string actor = ss1.str();
-
     return new Classics('C', stock, director, title, actor, month, year);
 }

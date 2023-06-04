@@ -58,4 +58,12 @@ public:
   Media* getMedia(char movieType, string title, int year); //search Comedy
   Media* getMedia(char movieType, string director, string title); //search Drama
   Media* getMedia(char movieType, int month, int year, string actor); //search Classic
+
+  void sortComedyMovie();
+
+  void sortClassicsMovie();
+
+  void sortDramaMovie();
+
+  void displayHistory(int customerID);
 };

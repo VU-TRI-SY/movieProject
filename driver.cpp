@@ -1,11 +1,11 @@
 #include "driver.h"
 
+#include "Factory/classics_factory.h"
+#include "Factory/comedy_factory.h"
 #include "Factory/customer_factory.h"
+#include "Factory/drama_factory.h"
 #include "Factory/media_factory.h"
 #include "Factory/movie_factory.h"
-#include "Factory/comedy_factory.h"
-#include "Factory/drama_factory.h"
-#include "Factory/classics_factory.h"
 using namespace std;
 
 void readInventory(string fileName, Store &store) {
@@ -50,7 +50,7 @@ void readInventory(string fileName, Store &store) {
       store.addMedia(media);
       break;
     default:
-      cerr << "Invalid movie type: " << movieType << endl;
+      cerr << "Invalid movie type " << endl;
       getline(infile, line, '\n'); // discard the rest of the line
       break;
     }
@@ -59,7 +59,8 @@ void readInventory(string fileName, Store &store) {
 }
 
 // Reads customer data from a file
-void readCustomers(string fileName, Store &store) { // select ---> ctr + shift + L
+void readCustomers(string fileName,
+                   Store &store) { // select ---> ctr + shift + L
   ifstream infile(fileName);
 
   if (!infile) {
@@ -105,25 +106,22 @@ void readCommands(string fileName, Store &store) {
       infile >> customerID;
       infile.ignore(1000, '\n'); // ignore the "\n"
       if (store.getCustomer(customerID) == nullptr) {
-        cerr << "Customer " << customerID << " does not exist." << endl;
+        cerr << "Invalid customer ID" << endl;
       } else {
-        vector<string> history = store.getHistory(customerID);
-        for (int i = 0; i < history.size(); i++) {
-          cout << history[i] << endl;
-        }
+        store.displayHistory(customerID);
       }
       break;
     case 'B':
       infile >> customerID;
       if (store.getCustomer(customerID) == nullptr) {
-        cerr << "Invalid customer ID: " << customerID << endl;
+        cerr << "Invalid customer ID" << endl;
         getline(infile, line, '\n'); // discard the rest of the line
         break;                       // break out of switch
       }
 
       infile >> mediaType;
       if (mediaType != 'D') {
-        cerr << "Invalid media type: " << mediaType << endl;
+        cerr << "Invalid media type" << endl;
         getline(infile, line, '\n'); // discard the rest of the line
         break;                       // break out of switch
       }
@@ -139,8 +137,7 @@ void readCommands(string fileName, Store &store) {
         infile.ignore(1000, '\n'); // ignore the "\n"
         media = store.getMedia('F', title, year);
         if (media == nullptr) {
-          cerr << "Movie not found: " << movieType << " " << title << ", "
-               << year << endl;
+          cerr << "Invalid movie" << endl;
           break; // break out of switch
         } else {
           if (media->getStock() >= 1) {
@@ -150,8 +147,10 @@ void readCommands(string fileName, Store &store) {
                              string(1, mediaType) + " " + string(1, movieType) +
                              " " + title + ", " + to_string(year);
             store.addTransactionHistory(customerID, command);
+          }else{
+            cerr << "Not enough stock" << endl;
           }
-          {break;} // break out of switch
+          { break; } // break out of switch
         }
 
       } else if (movieType == 'D') {
@@ -166,14 +165,116 @@ void readCommands(string fileName, Store &store) {
         infile.ignore(1000, '\n'); // ignore the "\n"
         Media *media = store.getMedia('D', director, title);
         if (media == nullptr) {
-          cerr << "Movie not found: " << movieType << " " << director << ", "
-               << title << endl;
+          cerr << "Invalid movie" << endl;
           break; // break out of switch
         } else {
           if (media->getStock() >= 1) {
             store.borrowMedia(store.getCustomer(customerID), media);
             // B 1000 D D Barry Levinson, Good Morning Vietnam,
             string command = "B " + to_string(customerID) + " " +
+                             string(1, mediaType) + " " + string(1, movieType) +
+                             " " + director + ", " + title + ",";
+            store.addTransactionHistory(customerID, command);
+          }else{
+            cerr << "Not enough stock" << endl;
+          }
+          break; // break out of switch
+        }
+      } else if (movieType == 'C') {
+        // input: " 5 1940 Katherine Hepburn"
+        infile >> month;
+        infile >> year;
+
+        // input: " Katherine Hepburn"
+        infile.ignore(1); // ignore the " "
+        // input: "Katherine Hepburn"
+        getline(infile, actor, '\n');
+        Media *media = store.getMedia('C', month, year, actor);
+        if (media == nullptr) {
+          cerr << "Invalid movie" << endl;
+          { break; } // break out of switch
+        } else {
+          if (media->getStock() >= 1) {
+            store.borrowMedia(store.getCustomer(customerID), media);
+            // B 1000 D C 5 1940 Katherine Hepburn
+            string command = "B " + to_string(customerID) + " " +
+                             string(1, mediaType) + " " + string(1, movieType) +
+                             " " + to_string(month) + " " + to_string(year) +
+                             " " + actor;
+            store.addTransactionHistory(customerID, command);
+          }else{
+            cerr << "Not enough stock" << endl;
+          }
+          break; // break out of switch
+        }
+      } else {
+        cerr << "Invalid movie type " << endl;
+        getline(infile, line, '\n'); // discard the rest of the line
+        break;                       // break out of switch
+      }
+    case 'R':
+      infile >> customerID;
+      if (store.getCustomer(customerID) == nullptr) {
+        cerr << "Invalid customer ID" << endl;
+        getline(infile, line, '\n'); // discard the rest of the line
+        break;                       // break out of switch
+      }
+
+      infile >> mediaType;
+      if (mediaType != 'D') {
+        cerr << "Invalid media type" << endl;
+        getline(infile, line, '\n'); // discard the rest of the line
+        break;                       // break out of switch
+      }
+
+      infile >> movieType;
+      if (movieType == 'F') {
+        // input: " When Harry Met Sally, 1989"
+        infile.ignore(1); // ignore the " "
+        ////input: "When Harry Met Sally, 1989"
+        getline(infile, title, ',');
+        // input: " 1989"
+        infile >> year;
+        infile.ignore(1000, '\n'); // ignore the "\n"
+        media = store.getMedia('F', title, year);
+        if (media == nullptr) {
+          cerr << "Invalid movie" << endl;
+          break; // break out of switch
+        } else {
+          if (store.getCustomer(customerID)->getBorrowedMedia(media) !=
+              nullptr) { // check that media is borrowed by customer
+            store.returnMedia(store.getCustomer(customerID), media);
+            // R 8888 D F When Harry Met Sally, 1989
+            string command = "R " + to_string(customerID) + " " +
+                             string(1, mediaType) + " " + string(1, movieType) +
+                             " " + title + ", " + to_string(year);
+            store.addTransactionHistory(customerID, command);
+          }else{
+            cerr << "The movie is not borrowed by this customer" << endl;
+          }
+          break; // break out of switch
+        }
+
+      } else if (movieType == 'D') {
+        // input: " Barry Levinson, Good Morning Vietnam,"
+        infile.ignore(1); // ignore the " "
+        // input: "Barry Levinson, Good Morning Vietnam,"
+        getline(infile, director, ',');
+        // input: " Good Morning Vietnam,"
+        infile.ignore(1); // ignore the " "
+        // input: "Good Morning Vietnam,"
+        getline(infile, title, ',');
+        infile.ignore(1000, '\n'); // ignore the "\n"
+        Media *media = store.getMedia('D', director, title);
+        if (media == nullptr) {
+          cerr << "Invalid movie" << endl;
+          break; // break out of switch
+        } else {
+          if (store.getCustomer(customerID)->getBorrowedMedia(media) !=
+              nullptr) {
+            store.returnMedia(store.getCustomer(customerID), media);
+            // R 1000 D D Barry Levinson, Good Morning Vietnam,
+            string command = "R " + to_string(customerID) + " " +
                              string(1, mediaType) + " " + string(1, movieType) +
                              " " + director + ", " + title + ",";
             store.addTransactionHistory(customerID, command);
@@ -191,14 +292,14 @@ void readCommands(string fileName, Store &store) {
         getline(infile, actor, '\n');
         Media *media = store.getMedia('C', month, year, actor);
         if (media == nullptr) {
-          cerr << "Movie not found: " << movieType << " " << month << " "
-               << year << " " << actor << endl;
-          {break;} // break out of switch
+          cerr << "Invalid movie" << endl;
+          break; // break out of switch
         } else {
-          if (media->getStock() >= 1) {
-            store.borrowMedia(store.getCustomer(customerID), media);
-            // B 1000 D C 5 1940 Katherine Hepburn
-            string command = "B " + to_string(customerID) + " " +
+          if (store.getCustomer(customerID)->getBorrowedMedia(media) !=
+              nullptr) {
+            store.returnMedia(store.getCustomer(customerID), media);
+            // R 1000 D C 5 1940 Katherine Hepburn
+            string command = "R " + to_string(customerID) + " " +
                              string(1, mediaType) + " " + string(1, movieType) +
                              " " + to_string(month) + " " + to_string(year) +
                              " " + actor;
@@ -207,104 +308,13 @@ void readCommands(string fileName, Store &store) {
           break; // break out of switch
         }
       } else {
-        cerr << "Invalid movie type: " << movieType << endl;
+        cerr << "Invalid movie type " << endl;
         getline(infile, line, '\n'); // discard the rest of the line
         break;                       // break out of switch
       }
-    case 'R':
-      infile >> customerID;
-      if (store.getCustomer(customerID) == nullptr) {
-        cerr << "Invalid customer ID: " << customerID << endl;
-        getline(infile, line, '\n'); // discard the rest of the line
-        break;                       // break out of switch
-      }
-
-      infile >> mediaType;
-      if (mediaType != 'D') {
-        cerr << "Invalid media type: " << mediaType << endl;
-        getline(infile, line, '\n'); // discard the rest of the line
-        break;                       // break out of switch
-      }
-
-      infile >> movieType;
-      if (movieType == 'F') {
-        // input: " When Harry Met Sally, 1989"
-        infile.ignore(1); // ignore the " "
-        ////input: "When Harry Met Sally, 1989"
-        getline(infile, title, ',');
-        // input: " 1989"
-        infile >> year;
-        infile.ignore(1000, '\n'); // ignore the "\n"
-        media = store.getMedia('F', title, year);
-        if (media == nullptr) {
-          cerr << "Movie not found: " << movieType << " " << title << ", "
-               << year << endl;
-          break; // break out of switch
-        } else {
-          if(store.getCustomer(customerID)->getBorrowedMedia(media) != nullptr){ //check that media is borrowed by customer
-            store.returnMedia(store.getCustomer(customerID), media);
-            // R 8888 D F When Harry Met Sally, 1989
-            string command = "R " + to_string(customerID) + " " +string(1, mediaType) + " " + string(1, movieType) + " " + title + ", " + to_string(year);
-            store.addTransactionHistory(customerID, command);
-          }
-          break; // break out of switch
-        }
-
-        } else if (movieType == 'D') {
-          // input: " Barry Levinson, Good Morning Vietnam,"
-          infile.ignore(1); // ignore the " "
-          // input: "Barry Levinson, Good Morning Vietnam,"
-          getline(infile, director, ',');
-          // input: " Good Morning Vietnam,"
-          infile.ignore(1); // ignore the " "
-          // input: "Good Morning Vietnam,"
-          getline(infile, title, ',');
-          infile.ignore(1000, '\n'); // ignore the "\n"
-          Media *media = store.getMedia('D', director, title);
-          if (media == nullptr) {
-            cerr << "Movie not found: " << movieType << " " << director << ", "
-                << title << endl;
-            break; // break out of switch
-          } else {
-            if(store.getCustomer(customerID)->getBorrowedMedia(media) != nullptr){
-              store.returnMedia(store.getCustomer(customerID), media);
-              // R 1000 D D Barry Levinson, Good Morning Vietnam,
-              string command = "R " + to_string(customerID) + " " +string(1, mediaType) + " " + string(1, movieType) + " " + director + ", " + title + ",";
-              store.addTransactionHistory(customerID, command);
-            }
-            break; // break out of switch
-          }
-        } else if (movieType == 'C') {
-          // input: " 5 1940 Katherine Hepburn"
-          infile >> month;
-          infile >> year;
-
-          // input: " Katherine Hepburn"
-          infile.ignore(1); // ignore the " "
-          // input: "Katherine Hepburn"
-          getline(infile, actor, '\n');
-          Media *media = store.getMedia('C', month, year, actor);
-          if (media == nullptr) {
-            cerr << "Movie not found: " << movieType << " " << month << " "
-                << year << " " << actor << endl;
-            break; // break out of switch
-          } else {
-            if(store.getCustomer(customerID)->getBorrowedMedia(media) != nullptr){
-              store.returnMedia(store.getCustomer(customerID), media);
-              // R 1000 D C 5 1940 Katherine Hepburn
-              string command = "R " + to_string(customerID) + " " +string(1, mediaType) + " " + string(1, movieType) + " " + to_string(month) + " " + to_string(year) + " " + actor;
-              store.addTransactionHistory(customerID, command);
-            }
-            break; // break out of switch
-          }
-        } else {
-          cerr << "Invalid movie type: " << movieType << endl;
-          getline(infile, line, '\n'); // discard the rest of the line
-          break;                       // break out of switch
-        }
-        break;
+      break;
     default:
-      cerr << "Invalid command code: " << commandType << endl;
+      cerr << "Invalid command code" << endl;
       getline(infile, line, '\n'); // discard the rest of the line
       break;
     }

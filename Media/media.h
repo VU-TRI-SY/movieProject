@@ -29,6 +29,7 @@ public:
   // constructor which passes agruments like type, stock, director, title and
   // year
   Media(char type, int stock, string director, string title, int year);
+  // virtual ~Media(); //virtual destructor
   virtual string getDetails();
 
   // reduce the stock by 1
